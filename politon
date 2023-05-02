@@ -1,0 +1,102 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Politon {
+private:
+    string nombre[100];
+    int edad[100];
+    float peso[100];
+    float altura[100];
+    float donativo[100];
+    string calificativo[100];
+    string calificativo_dado(float don) {
+        if (don > 100)
+            return "muy generoso";
+        else if (don > 50)
+            return "generoso";
+        else if (don > 10)
+            return "codo";
+        else
+            return "codisimo";
+    }
+public:
+Politon() {
+for (int i = 0; i < 100; i++) {
+nombre[i] = "";
+edad[i] = 0;
+peso[i] = 0.0;
+altura[i] = 0.0;
+donativo[i] = 0.0;
+calificativo[i] = "";
+        }
+    }
+    void agregar_donador(string nom, int ed, float pes, float alt, float don) {
+for (int i = 0; i < 100; i++) {
+            if (nombre[i] == "") {
+nombre[i] = nom;
+edad[i] = ed;
+peso[i] = pes;
+altura[i] = alt;
+donativo[i] = don;
+calificativo[i] = calificativo_dado(don);
+break;
+            }
+        }
+    }
+void mostrar_todo() {
+        float mayor_don = 0.0;
+        string nombre_mayor_don = "";
+        float menor_don = 1000000.0;
+        string nombre_menor_don = "";
+
+        for (int i = 0; i < 100; i++) {
+            if (nombre[i] != "") {
+                cout << "Nombre: " << nombre[i] << endl;
+                cout << "Edad: " << edad[i] << endl;
+                cout << "Peso: " << peso[i] << endl;
+                cout << "Altura: " << altura[i] << endl;
+                cout << "Donativo: " << donativo[i] << endl;
+                cout << "Calificativo: " << calificativo[i] << endl;
+
+                if (donativo[i] > mayor_don) {
+                    mayor_don = donativo[i];
+                    nombre_mayor_don = nombre[i];
+                }
+                if (donativo[i] < menor_don) {
+                    menor_don = donativo[i];
+                    nombre_menor_don = nombre[i];
+                }
+            }
+        }
+        cout << "El mayor donativo es de " << nombre_mayor_don << " con un monto de " << mayor_don << " y un calificativo de " << calificativo_dado(mayor_don) << endl;
+        cout << "El menor donativo es de " << nombre_menor_don << " con un monto de " << menor_don << " y un calificativo de " << calificativo_dado(menor_don) << endl;
+    }
+};
+int main() {
+    int n;
+    string nom;
+    int ed;
+    float pes, alt, don;
+    Politon p;
+    cout << "Ingrese el numero de donadores: ";
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cout << "Ingrese el nombre del donador " << i+1 << ": ";
+        cin >> nom;
+        cout << "Ingrese la edad del donador " << i+1 << ": ";
+        cin >> ed;
+        cout << "Ingrese el peso del donador " << i+1 << ": ";
+        cin >> pes;
+        cout << "Ingrese la altura del donador " << i+1 << ": ";
+        cin >> alt;
+        cout << "Ingrese el donativo del donador " << i+1 << ": ";
+        cin >> don;
+
+        p.agregar_donador(nom, ed, pes, alt, don);
+    }
+
+    cout << endl;
+    p.mostrar_todo();
+
+    return 0;
+}
